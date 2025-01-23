@@ -54,7 +54,7 @@ fun ScheduleScreen() {
                 .size(420.dp)
             ,
             contentPadding = PaddingValues(12.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
         ) {
             items(tradesman.size) { index ->
                 val trade = tradesman[index]

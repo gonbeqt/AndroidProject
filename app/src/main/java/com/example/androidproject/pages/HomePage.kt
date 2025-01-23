@@ -22,7 +22,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.LocationOn
@@ -44,6 +46,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -74,16 +77,14 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 .fillMaxSize()
                 .background(Color.White)
         ){
-            Column(modifier=Modifier.fillMaxSize()) {
+            Column(modifier=Modifier.fillMaxSize()
+                .verticalScroll(rememberScrollState())
+            ) {
                 Row(
                     modifier = Modifier.fillMaxWidth().padding( top = 40.dp, start =25.dp, end = 25.dp),
                     horizontalArrangement = Arrangement.Absolute.SpaceBetween
                 ){
-                    //Should be Logo
-                    Image( painter = painterResource(id = R.drawable.visibility_on),
-                        contentDescription = "LOGO",
-                        contentScale = ContentScale.Crop
-                    )
+
                     Row (){
                         Icon(
                             imageVector = Icons.Default.LocationOn,
@@ -92,16 +93,6 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                             tint = (Color.Gray)
                         )
 
-                        Text(text = "Location",
-                            color = Color.Black,fontSize = 16.sp, modifier = Modifier.padding(start = 5.dp, top = 2.dp))
-                        Icon( imageVector = Icons.Default.Notifications,
-                            contentDescription = "Notifications Image",
-                            modifier = Modifier.padding(start = 60.dp)
-                                .size(32.dp)
-                                .clickable {  },//Implementation here
-                            tint = (Color.Gray)
-
-                        )
                         Icon( imageVector = Icons.Default.AccountCircle,
                             contentDescription = "Account Image",
                             modifier = Modifier.padding(start = 15.dp)
@@ -124,7 +115,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
                 ){
                     Icon(
-                        imageVector = androidx.compose.material.icons.Icons.Default.Search,
+                        imageVector = Icons.Default.Search,
                         contentDescription = "Search Icon",
                         tint = Color.Gray,
                         modifier = Modifier.size(32.dp)
@@ -132,6 +123,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     BasicTextField(
+                        maxLines = 1,
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
                         modifier = Modifier.weight(1f),
@@ -139,7 +131,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                         decorationBox = { innerTextField ->
                             if (searchQuery.isEmpty()) {
                                 Text(
-                                    text = "Search for services or tradespeople...",
+                                    text = "Search for services or tradespeople",
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
                                     style = androidx.compose.ui.text.TextStyle(fontSize = 16.sp, color = Color.Gray)
                                 )
                             }
